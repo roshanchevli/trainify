@@ -1,0 +1,88 @@
+fitconnect/
+│
+├── app/
+│   ├── (auth)/                     # Public auth routes
+│   │   ├── login/
+│   │   │   └── page.jsx
+│   │   ├── register/
+│   │   │   └── page.jsx
+│   │   └── layout.jsx
+│   │
+│   ├── dashboard/                  # Protected dashboards
+│   │   ├── client/
+│   │   │   ├── page.jsx            # Client dashboard
+│   │   │   ├── bookings/
+│   │   │   │   └── page.jsx
+│   │   │   └── profile/
+│   │   │       └── page.jsx
+│   │   │
+│   │   ├── trainer/
+│   │   │   ├── page.jsx            # Trainer dashboard
+│   │   │   ├── availability/
+│   │   │   │   └── page.jsx
+│   │   │   ├── clients/
+│   │   │   │   └── page.jsx
+│   │   │   └── earnings/
+│   │   │       └── page.jsx
+│   │   │
+│   │   └── admin/
+│   │       ├── page.jsx            # Admin dashboard
+│   │       ├── approvals/
+│   │       │   └── page.jsx
+│   │       ├── users/
+│   │       │   └── page.jsx
+│   │       └── analytics/
+│   │           └── page.jsx
+│   │
+│   ├── trainers/                   # Public trainer listing
+│   │   ├── page.jsx                # All trainers
+│   │   └── [id]/
+│   │       └── page.jsx            # Trainer profile
+│   │
+│   ├── bookings/
+│   │   └── page.jsx                # Client bookings
+│   │
+│   ├── checkout/
+│   │   └── page.jsx                # Stripe checkout
+│   │
+│   ├── api/
+│   │   ├── auth/
+│   │   │   └── [...nextauth]/route.js
+│   │   ├── users/route.js
+│   │   ├── trainers/route.js
+│   │   ├── bookings/route.js
+│   │   └── payments/route.js
+│   │
+│   ├── layout.jsx                  # Root layout
+│   ├── page.jsx                    # Landing page
+│   └── not-found.jsx
+│
+├── components/                     # Reusable UI components
+│   ├── ui/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── TrainerCard.jsx
+│   └── BookingCalendar.jsx
+│
+├── lib/                            # Core logic
+│   ├── db.js                       # MongoDB connection
+│   ├── auth.js                     # Auth helpers
+│   ├── stripe.js                   # Stripe config
+│   └── validators.js
+│
+├── models/                         # Mongoose schemas
+│   ├── User.js
+│   ├── TrainerProfile.js
+│   └── Booking.js
+│
+├── middleware.js                   # Role-based route protection
+│
+├── public/
+│   └── images/
+│
+├── styles/
+│   └── globals.css
+│
+├── .env.local
+├── package.json
+└── README.md

@@ -16,12 +16,10 @@ export async function middleware(req) {
 
   console.log("🔥 middleware called:", pathname);
 
-  // 🔒 Protect private routes
   if (!token && (pathname === "/" || pathname.startsWith("/dashboard"))) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
-  // 🚫 Block auth pages for logged-in users
   if (token && (pathname === "/signin" || pathname === "/signup")) {
     return NextResponse.redirect(new URL("/", req.url));
   }

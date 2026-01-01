@@ -1,6 +1,11 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
+export const metadata = {
+  title: "home page",
+  description: "This is the home page of the application",
+};
+
 export default function HomePage() {
   return (
     <>

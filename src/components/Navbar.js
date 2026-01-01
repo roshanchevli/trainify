@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const isActive = (path) =>
     pathname === path
-      ? "text-indigo-600 font-semibold"
+      ? "text-indigo-600 font-semibold border-b-2 border-indigo-600 pb-1"
       : "text-gray-700 hover:text-indigo-600";
 
   return (

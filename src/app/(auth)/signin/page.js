@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -82,6 +83,27 @@ export default function SignInPage() {
             Sign up
           </span>
         </p>
+        {/* Divider */}
+        <div className="flex items-center my-4">
+          <div className="flex-grow border-t"></div>
+          <span className="mx-3 text-sm text-gray-500">or continue with</span>
+          <div className="flex-grow border-t"></div>
+        </div>
+
+        {/* Google Button (UI only) */}
+        <button
+          type="button"
+          className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          <span className="text-sm font-medium text-gray-700">
+            Continue with Google
+          </span>
+        </button>
       </div>
     </div>
   );

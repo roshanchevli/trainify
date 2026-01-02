@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
 
-  // 🚫 Never block NextAuth routes
   if (pathname.startsWith("/api/auth")) {
     return NextResponse.next();
   }
@@ -16,11 +15,19 @@ export async function middleware(req) {
 
   console.log("🔥 middleware called:", pathname);
 
-  if (!token && (pathname === "/" || pathname.startsWith("/dashboard"))) {
+  if (!token && (pathname === "/" || pathname.startsWith("/admin"))) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
   if (token && (pathname === "/signin" || pathname === "/signup")) {
+    // Admin → admin dashboard
+    if (token.role === "admin") {
+      return NextResponse.redirect(new URL("/admin", req.url));
+    }
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (pathname.startsWith("/admin") && token?.role !== "admin") {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -28,5 +35,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/", "/signin", "/signup", "/dashboard/:path*"],
+  matcher: ["/", "/signin", "/signup", "/admin/:path*"],
 };

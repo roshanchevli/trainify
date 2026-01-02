@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [loading, setLoading] = useState(false);
+
   const pathname = usePathname();
 
   const isActive = (path) =>
@@ -52,10 +55,13 @@ export default function Navbar() {
               {session.user.name}
             </span>
             <button
-              onClick={() => signOut()}
+              onClick={() => {
+                setLoading(true);
+                signOut({ callbackUrl: "/" });
+              }}
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
             >
-              Logout
+              {loading ? "Logging out..." : "Logout"}
             </button>
           </div>
         ) : (

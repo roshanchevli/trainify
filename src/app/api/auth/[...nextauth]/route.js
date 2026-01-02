@@ -23,38 +23,39 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            return null;
-          }
-
-          await connectDB();
-
-          const user = await User.findOne({ email: credentials.email });
-          if (!user) {
-            console.log("User not found");
-            return null;
-          }
-
-          const isPasswordValid = await bcryptjs.compare(
-            credentials.password,
-            user.password
-          );
-
-          if (!isPasswordValid) {
-            console.log("Invalid password");
-            return null;
-          }
-
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-          };
-        } catch (error) {
-          console.error("Authorize error:", error);
-          return null;
+        // try {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password are required");
         }
+
+        await connectDB();
+
+        const user = await User.findOne({ email: credentials.email });
+        if (!user) {
+          console.log("User not found");
+          throw new Error("No user found with the provided email");
+        }
+
+        const isPasswordValid = await bcryptjs.compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isPasswordValid) {
+          console.log("Invalid password");
+          throw new Error("Invalid password");
+        }
+
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
+        // } catch (error) {
+        //   console.error("Authorize error:", error);
+        //   throw new Error(error.message || "Authorization failed");
+        // }
       },
     }),
   ],
@@ -76,6 +77,7 @@ export const authOptions = {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.role = user.role;
       }
       return token;
     },
@@ -85,6 +87,7 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.role = token.role;
       }
       return session;
     },

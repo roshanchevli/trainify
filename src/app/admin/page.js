@@ -16,7 +16,7 @@ export default function AdminDashboard() {
       try {
         const res = await fetch("/api/admin/user");
         const data = await res.json();
-        setUsers(data.users); 
+        setUsers(data.users);
       } catch (error) {
         console.error("Failed to fetch users", error);
       } finally {
@@ -27,11 +27,8 @@ export default function AdminDashboard() {
     fetchUsers();
   }, []);
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      {/* Sidebar */}
-      <AdminSidebar />
-
-      {/* Main Content */}
+    <div className="flex-1 flex flex-col">
+      `{/* Main Content */}
       <main className="flex-1 p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -51,21 +48,27 @@ export default function AdminDashboard() {
           <StatCard
             icon={<Users size={28} />}
             title="Total Users"
-            value="1,245"
+            value={users.length}
           />
 
           <StatCard
             icon={<UserCheck size={28} />}
-            title="Active Users"
-            value="1,080"
+            title="Active Trainers"
+            value={users.filter((user) => user.role === "trainer").length}
           />
 
-          <StatCard icon={<Shield size={28} />} title="Admins" value="3" />
+          <StatCard
+            icon={<Shield size={28} />}
+            title="Admins"
+            value={users.filter((user) => user.role === "admin").length}
+          />
         </div>
 
         {/* Recent Users Table */}
         <div className="mt-10 bg-white shadow rounded-lg">
-          <div className="p-6 border-b font-semibold text-gray-700 text-lg">Recent Users</div>
+          <div className="p-6 border-b font-semibold text-gray-700 text-lg">
+            Recent Users
+          </div>
 
           <table className="w-full text-left">
             <thead className="bg-gray-50 text-gray-600">
@@ -73,7 +76,7 @@ export default function AdminDashboard() {
                 <th className="p-4">Name</th>
                 <th className="p-4">Email</th>
                 <th className="p-4">Role</th>
-                <th className="p-4">Status</th>
+                <th className="p-4">Created At</th>
               </tr>
             </thead>
             <tbody>
@@ -90,6 +93,7 @@ export default function AdminDashboard() {
                     name={user.name}
                     email={user.email}
                     role={user.role}
+                    createdAt={user.createdAt}
                   />
                 ))
               )}

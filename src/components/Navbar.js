@@ -30,13 +30,13 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/trainers" className={isActive("/trainers")}>
-              Trainers
+            <Link href="/category" className={isActive("/category")}>
+              Category
             </Link>
           </li>
           <li>
-            <Link href="/programs" className={isActive("/programs")}>
-              Programs
+            <Link href="/trainers" className={isActive("/trainers")}>
+              Trainers
             </Link>
           </li>
           <li>
@@ -59,7 +59,7 @@ export default function Navbar() {
                 setLoading(true);
                 signOut({ callbackUrl: "/" });
               }}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
             >
               {loading ? "Logging out..." : "Logout"}
             </button>

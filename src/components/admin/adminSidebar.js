@@ -25,6 +25,12 @@ export default function AdminSidebar() {
           Users
         </Link>
         <Link
+          href="/admin/categories"
+          className={`block px-6 py-3 ${isActive("/admin/categories")}`}
+        >
+          Categories of Trainers
+        </Link>
+        <Link
           href="/admin/trainers"
           className={`block px-6 py-3 ${isActive("/admin/trainers")}`}
         >

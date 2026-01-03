@@ -2,7 +2,7 @@ import AdminSidebar from "@/components/admin/adminSidebar";
 
 export const metadata = {
   title: "Trainify",
-  description: "Trainify – Train booking and management platform",
+  description: "Trainify - Train booking and management platform",
 };
 
 export default function MainLayout({ children }) {

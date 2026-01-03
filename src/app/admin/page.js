@@ -97,14 +97,6 @@ export default function AdminDashboard() {
                   />
                 ))
               )}
-
-              {/* <UserRow
-                name="Rahul Sharma"
-                email="rahul@gmail.com"
-                role="Client"
-              />
-              <UserRow name="Admin User" email="admin@gmail.com" role="Admin" />
-              <UserRow name="Neha Patel" email="neha@gmail.com" role="Client" /> */}
             </tbody>
           </table>
         </div>

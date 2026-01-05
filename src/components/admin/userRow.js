@@ -10,7 +10,7 @@ export default function UserRow({ name, email, role, createdAt }) {
       </td>
       <td className="p-4">
         <span className="px-3 py-1 rounded-full text-sm bg-gray-500 text-white">
-          {createdAt}
+          {createdAt || "—"}
         </span>
       </td>
     </tr>

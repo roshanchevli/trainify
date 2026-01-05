@@ -36,6 +36,12 @@ export default function AdminSidebar() {
         >
           Trainers
         </Link>
+        <Link
+          href="/admin/bookings"
+          className={`block px-6 py-3 ${isActive("/admin/bookings")}`}
+        >
+          Bookings
+        </Link>
       </nav>
     </aside>
   );

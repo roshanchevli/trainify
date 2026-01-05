@@ -64,6 +64,7 @@ export default function AdminCategoryPage() {
                 <th className="p-4">Slug</th>
                 <th className="p-4">Description</th>
                 <th className="p-4">Created at</th>
+                <th className="p-4">Action</th>
               </tr>
             </thead>
 

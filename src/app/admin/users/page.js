@@ -1,7 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
-// import UserRow from "@/components/admin/UserRow";
+import UserRow from "@/components/admin/userRow";
 import { useEffect, useState } from "react";
 
 export default function AdminUsersPage() {
@@ -47,14 +46,12 @@ export default function AdminUsersPage() {
                 <th className="p-4">Name</th>
                 <th className="p-4">Email</th>
                 <th className="p-4">Role</th>
-                <th className="p-4">Status</th>
                 <th className="p-4">Joined</th>
-                <th className="p-4">Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              {/* {loading ? (
+              {loading ? (
                 <tr>
                   <td colSpan="4" className="p-4 text-center text-gray-700">
                     Loading...
@@ -62,15 +59,15 @@ export default function AdminUsersPage() {
                 </tr>
               ) : (
                 users.map((user) => (
-                  // <UserRow
-                  //   key={user._id}
-                  //   name={user.name}
-                  //   email={user.email}
-                  //   role={user.role}
-                  //   createdAt={user.createdAt}
-                  // />
+                  <UserRow
+                    key={user._id}
+                    name={user.name}
+                    email={user.email}
+                    role={user.role}
+                    createdAt={user.createdAt}
+                  />
                 ))
-              )} */}
+              )}
             </tbody>
           </table>
         </div>

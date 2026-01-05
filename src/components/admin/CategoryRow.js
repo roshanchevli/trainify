@@ -18,7 +18,7 @@ export default function CategoryRow({ name, slug, description, createdAt }) {
       <td className="p-4 text-gray-500 text-sm">{createdAt || "—"} </td>
 
       {/* Actions */}
-      <td className="p-4 text-right space-x-2">
+      <td className="p-4  space-x-2">
         <button className="inline-flex items-center gap-1 px-3 py-1 border rounded-md text-sm  text-indigo-600  hover:bg-indigo-600 hover:text-white transition">
           <Edit size={14} />
           Edit

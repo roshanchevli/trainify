@@ -1,34 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function SignUpPage() {
+  const { data: session, status } = useSession();
   const router = useRouter();
-
+  const [role, setRole] = useState("client");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // useEffect(() => {
+  //   if (session === "trainer") {
+  //     router.push("/trainer/dashboard");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, [status, session, router]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
-    const response = await fetch("/api/user/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+    try {
+      const res = await fetch("/api/user/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role }),
+      });
 
-    setLoading(false);
+      const data = await res.json();
 
-    if (response.ok) {
+      if (!res.ok) {
+        setError(data.message || "Signup failed");
+        return;
+      }
+
+      if (session === "trainer") {
+        router.push("/trainer/dashboard");
+        return;
+      }
       router.push("/signin");
-    } else {
-      const data = await response.json();
-      alert(data.message);
+    } catch (err) {
+      setError("Server error. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +73,6 @@ export default function SignUpPage() {
             </label>
             <input
               type="text"
-              required
               placeholder="John Doe"
               onChange={(e) => setName(e.target.value)}
               className="w-full mt-1 px-4 py-2 text-gray-700 border rounded-lg 
@@ -65,7 +86,6 @@ export default function SignUpPage() {
             </label>
             <input
               type="email"
-              required
               placeholder="you@example.com"
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 px-4 py-2 text-gray-700 border rounded-lg 
@@ -79,7 +99,6 @@ export default function SignUpPage() {
             </label>
             <input
               type="password"
-              required
               placeholder="••••••••"
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mt-1 px-4 py-2 text-gray-700 border rounded-lg 
@@ -87,6 +106,39 @@ export default function SignUpPage() {
             />
             <p className="text-xs text-gray-400 mt-1">Minimum 6 characters</p>
           </div>
+          <div>
+            <label className="block text-sm text-gray-700 font-medium mb-2">
+              Register as
+            </label>
+
+            <div className="flex gap-4">
+              <label className="flex text-gray-500 items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="client"
+                  checked={role === "client"}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                Client
+              </label>
+
+              <label className="flex text-gray-500 items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value="trainer"
+                  checked={role === "trainer"}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                Trainer
+              </label>
+            </div>
+          </div>
+
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
 
           <button
             type="submit"

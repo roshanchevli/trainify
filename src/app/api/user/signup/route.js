@@ -7,7 +7,7 @@ export async function POST(request) {
   try {
     await connectDB();
 
-    const { name, email, password } = await request.json();
+    const { name, email, password, role } = await request.json();
 
     // Input validation
     if (!name || !email || !password) {
@@ -26,6 +26,13 @@ export async function POST(request) {
       );
     }
 
+    if (password.length < 6) {
+      return NextResponse.json(
+        { message: "Password must be at least 6 characters long" },
+        { status: 400 }
+      );
+    }
+
     // Hash password
     const hashedPassword = await bcryptjs.hash(password, 10);
 
@@ -34,6 +41,7 @@ export async function POST(request) {
       name,
       email,
       password: hashedPassword,
+      role,
     });
 
     // return  response

@@ -87,15 +87,18 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ) : (
-                users.map((user) => (
-                  <UserRow
-                    key={user._id}
-                    name={user.name}
-                    email={user.email}
-                    role={user.role}
-                    createdAt={user.createdAt}
-                  />
-                ))
+                [...users]
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // newest first
+                  .slice(0, 5) // only 5 users
+                  .map((user) => (
+                    <UserRow
+                      key={user._id}
+                      name={user.name}
+                      email={user.email}
+                      role={user.role}
+                      createdAt={user.createdAt}
+                    />
+                  ))
               )}
             </tbody>
           </table>

@@ -15,9 +15,7 @@ export default function CategoryRow({ name, slug, description, createdAt }) {
       </td>
 
       {/* Created At */}
-      <td className="p-4 text-gray-500 text-sm">
-        {new Date(createdAt).toLocaleDateString()}
-      </td>
+      <td className="p-4 text-gray-500 text-sm">{createdAt || "—"} </td>
 
       {/* Actions */}
       <td className="p-4 text-right space-x-2">

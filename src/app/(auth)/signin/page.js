@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-
 export default function SignInPage() {
   const router = useRouter();
 
@@ -18,17 +17,18 @@ export default function SignInPage() {
 
   const { data: session, status } = useSession();
 
-    useEffect(() => {
+  useEffect(() => {
     if (status === "authenticated") {
       if (session.user.role === "admin") {
-        router.replace("/admin");      
+        router.replace("/admin");
+      } else if (session.user.role === "trainer") {
+        router.replace("/trainer");
       } else {
-        router.replace("/"); 
+        router.replace("/");
       }
     }
-    }, [router, session, status]);
+  }, [router, session, status]);
 
- 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,7 +69,6 @@ export default function SignInPage() {
             <input
               type="email"
               placeholder="you@example.com"
-              required
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 text-gray-700 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             />
@@ -81,7 +80,6 @@ export default function SignInPage() {
             </label>
             <input
               type="password"
-              required
               placeholder="••••••••"
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mt-1 text-gray-700 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"

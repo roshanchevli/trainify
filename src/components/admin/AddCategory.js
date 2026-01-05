@@ -8,6 +8,8 @@ export default function AddCategoryDialog({ open, onClose, onSuccess }) {
     description: "",
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -19,15 +21,31 @@ export default function AddCategoryDialog({ open, onClose, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/admin/addcategory", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(category),
-    });
-    onClose();
-    onSuccess();
+    setError("");
+
+    try {
+      const res = await fetch("/api/admin/addcategory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Something went wrong");
+        return;
+      }
+
+      onSuccess();
+      onClose();
+
+      setCategory({ name: "", slug: "", description: "" });
+    } catch (err) {
+      setError("Server error. Please try again.");
+    }
   };
 
   if (!open) return null;
@@ -42,7 +60,7 @@ export default function AddCategoryDialog({ open, onClose, onSuccess }) {
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-800"
+            className="text-gray-500 cursor-pointer hover:text-gray-800"
           >
             <X size={20} />
           </button>
@@ -52,7 +70,7 @@ export default function AddCategoryDialog({ open, onClose, onSuccess }) {
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block cursor-pointer text-sm font-medium text-gray-700 mb-1">
               Category Name
             </label>
             <input
@@ -93,19 +111,24 @@ export default function AddCategoryDialog({ open, onClose, onSuccess }) {
               className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
+          {error && (
+            <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-lg">
+              {error}
+            </div>
+          )}
 
           {/* Footer */}
           <div className="flex justify-end gap-3 pt-4 border-t">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border text-gray-700 hover:bg-gray-100"
+              className="px-4 py-2 cursor-pointer rounded-lg border text-gray-700 hover:bg-gray-100"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
+              className="px-4 py-2 rounded-lg cursor-pointer bg-indigo-600 text-white hover:bg-indigo-700"
             >
               Add Category
             </button>

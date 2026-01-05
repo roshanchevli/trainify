@@ -62,8 +62,8 @@ export default function AdminCategoryPage() {
               <tr>
                 <th className="p-4">Category Name</th>
                 <th className="p-4">Slug</th>
-                <th className="p-4">Status</th>
-                <th className="p-4 text-right">Actions</th>
+                <th className="p-4">Description</th>
+                <th className="p-4">Created at</th>
               </tr>
             </thead>
 
@@ -81,27 +81,10 @@ export default function AdminCategoryPage() {
                     name={cat.name}
                     slug={cat.slug}
                     description={cat.description}
+                    createdAt={cat.createdAt}
                   />
                 ))
               )}
-              {/* <CategoryRow
-                name="Fitness & Gym Training"
-                slug="fitness-gym"
-                description="Training for fitness and gym enthusiasts."
-                createdAt={new Date("2024-01-15")}
-              />
-              <CategoryRow
-                name="Yoga & Mindfulness"
-                slug="yoga-mindfulness"
-                description="Yoga practices and mindfulness techniques."
-                createdAt={new Date("2024-02-20")}
-              />
-              <CategoryRow
-                name="Martial Arts"
-                slug="martial-arts"
-                description="Training in various martial arts disciplines."
-                createdAt={new Date("2024-03-10")}
-              /> */}
             </tbody>
           </table>
         </div>

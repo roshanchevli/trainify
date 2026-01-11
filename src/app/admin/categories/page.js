@@ -75,6 +75,7 @@ export default function AdminCategoryPage() {
                     Loading...
                   </td>
                 </tr>
+                //sfsdfsdf
               ) : (
                 categories.map((cat) => (
                   <CategoryRow
